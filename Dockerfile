@@ -1,5 +1,5 @@
 # https://github.com/julianbei/alpine-opencv-microimage/blob/master/python3/3.3.0/Dockerfile
-FROM coolersport/alpine-java:8u172b11_jdk_unlimited AS alpine
+FROM openjdk:8-jdk-alpine AS alpine
 
 RUN echo -e '@edgunity http://nl.alpinelinux.org/alpine/edge/community\n\
 @edge http://nl.alpinelinux.org/alpine/edge/main\n\
@@ -78,7 +78,7 @@ RUN mkdir -p /opt/opencv/build && \
 
 FROM ubuntu:18.04 AS ubuntu
 
-ENV JAVA_HOME=/usr/lib/jvm/java-8-oracle
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 RUN apt update && \
 # install required tools
@@ -87,14 +87,8 @@ RUN apt update && \
                    python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev \
                    python3 python3-dev python3-numpy \
                    software-properties-common debconf-utils && \
-# install oracle jdk 
-    echo -e '\n'; add-apt-repository ppa:webupd8team/java && \
-    apt update && \
-    echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-    echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
-    apt install -y oracle-java8-installer && \
-    update-java-alternatives -s java-8-oracle && \
-    apt install -y oracle-java8-set-default && \
+# install openjdk-8
+    apt install -y openjdk-8-jdk && \
 # libjasper-dev
     curl -fs http://security.ubuntu.com/ubuntu/pool/main/j/jasper/libjasper1_1.900.1-debian1-2.4ubuntu1.2_amd64.deb -o /tmp/libjasper1.deb && \
     curl -fs http://security.ubuntu.com/ubuntu/pool/main/j/jasper/libjasper-dev_1.900.1-debian1-2.4ubuntu1.2_amd64.deb -o /tmp/libjasper-dev.deb && \
