@@ -124,7 +124,8 @@ RUN cd /tmp/opencv/build && \
 
 FROM alpine:3.18
 
-RUN mkdir -p /opt/opencv/ubuntu/java /opt/opencv/alpine/java
+RUN mkdir -p /opt/opencv/ubuntu/java /opt/opencv/alpine/java && \
+    apk add openssl --no-cache
 
 COPY --from=alpine /opt/opencv/build/bin/*.jar /opt/opencv/build/lib/libopencv_java*.so /opt/opencv/alpine/java/
 COPY --from=ubuntu /tmp/opencv/build/bin/*.jar /tmp/opencv/build/lib/libopencv_java*.so /opt/opencv/ubuntu/java/
