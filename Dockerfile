@@ -37,7 +37,7 @@ RUN apk add --update --no-cache \
 
 ENV CC=/usr/bin/clang \
     CXX=/usr/bin/clang++ \
-    OPENCV_VERSION=3.4.6
+    OPENCV_VERSION=3.4.19
 
 # install ant from apache to avoid getting openjdk
 RUN cd /opt && \
@@ -78,7 +78,7 @@ RUN mkdir -p /opt/opencv/build && \
 FROM ubuntu:18.04 AS ubuntu
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
-    OPENCV_VERSION=3.4.6
+    OPENCV_VERSION=3.4.19
 
 RUN apt update && \
 # install required tools
