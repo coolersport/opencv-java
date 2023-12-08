@@ -75,7 +75,7 @@ RUN mkdir -p /opt/opencv/build && \
     make -j8
 #  make install && \
 
-FROM ubuntu:18.04 AS ubuntu
+FROM ubuntu:22.04 AS ubuntu
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
     OPENCV_VERSION=3.4.2
@@ -84,7 +84,7 @@ RUN apt update && \
 # install required tools
     apt install -y git unzip ant build-essential \
                    cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev \
-                   python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev \
+                   python2-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-25 \
                    python3 python3-dev python3-numpy \
                    software-properties-common debconf-utils
 # install openjdk-8
