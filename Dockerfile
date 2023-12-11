@@ -1,10 +1,5 @@
 # https://github.com/julianbei/alpine-opencv-microimage/blob/master/python3/3.3.0/Dockerfile
-FROM eclipse-temurin:8u322-b06-jdk-alpine AS alpine
-
-RUN echo -e 'https://dl-cdn.alpinelinux.org/alpine/v3.10/main' > /etc/apk/repositories
-RUN echo -e 'https://dl-cdn.alpinelinux.org/alpine/v3.10/community' >> /etc/apk/repositories
-RUN echo -e '@community314 https://dl-cdn.alpinelinux.org/alpine/v3.14/community' >> /etc/apk/repositories
-RUN echo -e '@main39 https://dl-cdn.alpinelinux.org/alpine/v3.10/main' >> /etc/apk/repositories
+FROM amazoncorretto:8u392-alpine AS alpine
 
 RUN apk add --update --no-cache \
   # --virtual .build-deps \
@@ -14,8 +9,8 @@ RUN apk add --update --no-cache \
       wget \
       cmake \
       #Intel® TBB, a widely used C++ template library for task parallelism'
-      libtbb@community314  \
-      libtbb-dev@community314   \
+      libtbb  \
+      libtbb-dev   \
       # Wrapper for libjpeg-turbo
       libjpeg  \
       # accelerated baseline JPEG compression and decompression library
@@ -23,7 +18,7 @@ RUN apk add --update --no-cache \
       # Portable Network Graphics library
       libpng-dev \
       # A software-based implementation of the codec specified in the emerging JPEG-2000 Part-1 standard (development files)
-      jasper-dev@main39 \
+      jasper-dev \
       # Provides support for the Tag Image File Format or TIFF (development files)
       tiff-dev \
       # Libraries for working with WebP images (development files)
@@ -31,7 +26,7 @@ RUN apk add --update --no-cache \
       # A C language family front-end for LLVM (development files)
       clang-dev \
       # python
-      python \
+      python3 \
       linux-headers
 #      && pip install numpy
 
@@ -75,7 +70,7 @@ RUN mkdir -p /opt/opencv/build && \
     make -j8
 #  make install && \
 
-FROM ubuntu:18.04 AS ubuntu
+FROM ubuntu:22.04 AS ubuntu
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
     OPENCV_VERSION=3.4.19
@@ -84,7 +79,7 @@ RUN apt update && \
 # install required tools
     apt install -y git unzip ant build-essential \
                    cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev \
-                   python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev \
+                   python2-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-25 \
                    python3 python3-dev python3-numpy \
                    software-properties-common debconf-utils
 # install openjdk-8
