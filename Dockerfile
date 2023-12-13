@@ -1,10 +1,8 @@
 # https://github.com/julianbei/alpine-opencv-microimage/blob/master/python3/3.3.0/Dockerfile
 FROM eclipse-temurin:8u322-b06-jdk-alpine AS alpine
 
-RUN echo -e 'https://dl-cdn.alpinelinux.org/alpine/v3.10/main' > /etc/apk/repositories
-RUN echo -e 'https://dl-cdn.alpinelinux.org/alpine/v3.10/community' >> /etc/apk/repositories
 RUN echo -e '@community314 https://dl-cdn.alpinelinux.org/alpine/v3.14/community' >> /etc/apk/repositories
-RUN echo -e '@main39 https://dl-cdn.alpinelinux.org/alpine/v3.10/main' >> /etc/apk/repositories
+RUN echo -e '@main310 https://dl-cdn.alpinelinux.org/alpine/v3.10/main' >> /etc/apk/repositories
 
 RUN apk add --update --no-cache \
   # --virtual .build-deps \
@@ -23,7 +21,7 @@ RUN apk add --update --no-cache \
       # Portable Network Graphics library
       libpng-dev \
       # A software-based implementation of the codec specified in the emerging JPEG-2000 Part-1 standard (development files)
-      jasper-dev@main39 \
+      jasper-dev@main310 \
       # Provides support for the Tag Image File Format or TIFF (development files)
       tiff-dev \
       # Libraries for working with WebP images (development files)
@@ -31,7 +29,7 @@ RUN apk add --update --no-cache \
       # A C language family front-end for LLVM (development files)
       clang-dev \
       # python
-      python \
+      python3 \
       linux-headers
 #      && pip install numpy
 
@@ -122,7 +120,7 @@ RUN cd /tmp/opencv/build && \
     make -j8
 #RUN cd /tmp/opencv/build && make install
 
-FROM alpine:3.18
+FROM alpine:3.19
 
 RUN mkdir -p /opt/opencv/ubuntu/java /opt/opencv/alpine/java && \
     apk add openssl --no-cache
