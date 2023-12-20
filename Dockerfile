@@ -3,7 +3,6 @@ FROM eclipse-temurin:8u322-b06-jdk-alpine AS alpine
 
 RUN echo -e '@community314 https://dl-cdn.alpinelinux.org/alpine/v3.14/community' >> /etc/apk/repositories
 RUN echo -e '@main310 https://dl-cdn.alpinelinux.org/alpine/v3.10/main' >> /etc/apk/repositories
-RUN echo -e '@main317 https://dl-cdn.alpinelinux.org/alpine/v3.17/main' >> /etc/apk/repositories
 
 RUN apk add --update --no-cache \
   # --virtual .build-deps \
@@ -24,7 +23,7 @@ RUN apk add --update --no-cache \
       # A software-based implementation of the codec specified in the emerging JPEG-2000 Part-1 standard (development files)
       jasper-dev@main310 \
       # Provides support for the Tag Image File Format or TIFF (development files)
-      tiff-dev@main317 \
+      tiff-dev@main310 \
       # Libraries for working with WebP images (development files)
       libwebp-dev \
       # A C language family front-end for LLVM (development files)
@@ -121,7 +120,7 @@ RUN cd /tmp/opencv/build && \
     make -j8
 #RUN cd /tmp/opencv/build && make install
 
-FROM alpine:3.19
+FROM alpine:3.19.0
 
 RUN mkdir -p /opt/opencv/ubuntu/java /opt/opencv/alpine/java && \
     apk add openssl --no-cache
